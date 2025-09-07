@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Israel Winlade — PhD Profile</title>
+<link rel="icon" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="One-page profile with canvas effects." />
+<style>
+:root{
+  --bg:#0a0b10; --card:#0e1018; --ink:#e9eaee; --cyan:#5fe1ff; --amber:#ffcc66;
+  --spot:240px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+a{color:inherit;text-decoration:none}
+.container{width:min(1200px,92vw);margin:0 auto}
+/* spotlight cursor */
+.spot{position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(var(--spot) var(--spot) at var(--sx,50%) var(--sy,50%), rgba(95,225,255,.12), transparent 60%);
+  mix-blend-mode:screen;z-index:15}
+/* nav */
+nav.nav{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:20;
+  display:flex;gap:8px;align-items:center;padding:8px 8px;border:1px solid #ffffff1a;background:rgba(14,16,24,.6);backdrop-filter:blur(8px);border-radius:999px}
+nav.nav a, nav.nav span.badge{padding:6px 12px;border-radius:999px}
+nav.nav a:hover{background:#ffffff0d}
+.btn{position:relative;display:inline-flex;gap:8px;align-items:center;padding:10px 16px;border:1px solid #ffffff1a;border-radius:14px;background:rgba(14,16,24,.6);backdrop-filter:blur(8px);cursor:pointer}
+.btn::after{content:"";position:absolute;inset:-8px;border-radius:20px;box-shadow:0 0 40px rgba(95,225,255,.22);opacity:0;transition:.25s}
+.btn:hover::after{opacity:1}
+/* magnetic */
+.btn.mag:hover{box-shadow:0 0 20px rgba(95,225,255,.35)}
+/* hero */
+header.hero{position:relative;min-height:92svh;display:grid;place-items:center;padding-top:80px}
+.hero .grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:900px){.hero .grid{grid-template-columns:1fr 1fr}}
+.badge{border:1px solid #ffffff26;background:#ffffff0d;font-size:12px;padding:6px 10px;border-radius:999px;display:inline-block}
+h1{font-family:Spectral,ui-serif,Georgia;font-weight:700;font-size:clamp(28px,5vw,56px);line-height:1.04;margin:10px 0}
+p.muted{color:#ffffffb3}
+.card{border:1px solid #ffffff1a;background:rgba(14,16,24,.6);backdrop-filter:blur(8px);border-radius:16px;padding:16px}
+.grid2{display:grid;gap:16px}
+@media(min-width:900px){.grid2{grid-template-columns:repeat(2,1fr)}}
+section{padding:72px 0}
+h2{font-family:Spectral,ui-serif,Georgia;font-size:28px;margin:0 0 12px}
+.small{font-size:13px;color:#ffffff99}
+/* sticky timeline */
+.timeline{position:relative;display:grid;gap:28px}
+@media(min-width:1000px){.timeline{grid-template-columns:280px 1fr}}
+.stickycol{position:sticky;top:96px;height:max-content;padding-left:24px}
+.rail{position:absolute;left:0;top:0;width:4px;height:100%;background:#ffffff1a;border-radius:3px}
+.progress{position:absolute;left:0;top:0;width:4px;height:0;background:linear-gradient(to bottom,var(--cyan),var(--amber));border-radius:3px}
+.stickycol ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.stickycol a:hover{color:var(--cyan)}
+/* citation cloud canvas wrapper */
+.cloudwrap{height:300px;position:relative}
+/* command palette */
+.kbar-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);z-index:40;display:none}
+.kbar{position:fixed;left:50%;top:96px;transform:translateX(-50%);width:min(720px,92vw);border:1px solid #ffffff1a;border-radius:16px;background:rgba(255,255,255,.05);box-shadow:0 20px 60px rgba(0,0,0,.4);display:none;z-index:41}
+.kbar input{width:100%;background:transparent;color:var(--ink);padding:12px 16px;border:0;outline:none}
+.kbar ul{max-height:50vh;overflow:auto;margin:0;padding:0;list-style:none}
+.kbar li{padding:12px 16px;border-top:1px solid #ffffff1a;cursor:pointer}
+.kbar li:hover{background:rgba(255,255,255,.06)}
+/* form shake */
+.shake{animation:shake .35s linear}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+footer{color:#ffffff80;text-align:center;padding:64px 0}
+/* media */
+img{max-width:100%;display:block}
+/* 3D tilt */
+.tilt{transform-style:preserve-3d;perspective:1000px}
+.tilt .inner{transition:transform .25s ease}
+/* background canvases */
+#particles,#parallax,#cloud{position:fixed;inset:0;z-index:-2}
+#parallax{z-index:-3;opacity:.25}
+/* spotlight cursor size reduces on mobile */
+@media(max-width:600px){:root{--spot:160px}}
+</style>
+</head>
+<body>
+<canvas id="parallax"></canvas>
+<canvas id="particles"></canvas>
+<div class="spot" aria-hidden></div>
+
+<nav class="nav container">
+  <span class="badge">Israel Winlade</span>
+  <a href="#research">Research</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#publications">Publications</a>
+  <a href="#contact">Contact</a>
+  <button class="btn mag" id="modeBtn">Mode</button>
+  <button class="btn mag" id="audioBtn">Audio <span id="dot" style="width:12px;height:12px;border-radius:999px;background:#ffffff33;display:inline-block;animation:pulse 1.2s infinite"></span></button>
+</nav>
+
+<header class="hero">
+  <div class="container grid">
+    <div>
+      <span class="badge">Stanford · French</span>
+      <h1 id="type"></h1>
+      <p class="muted">Negritude · Pan-African thought · postcolonial theory · Afrotopia · identity and power in African/diaspora cultural production.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+        <a href="#publications" class="btn mag">Publications</a>
+        <a href="#contact" class="btn mag">Invite to speak</a>
+      </div>
+    </div>
+    <div>
+      <div class="card tilt">
+        <div class="inner">
+          <img src="https://dlcl.stanford.edu/sites/dlcl/files/styles/hs_medium_square_360x360/public/media/image/isreal_winlade-profile_photo_0.jpg.webp?itok=pIxh8DJF" alt="Israel Winlade portrait"/>
+        </div>
+      </div>
+      <p class="small" style="margin-top:6px">Photo: Stanford DLCL</p>
+    </div>
+  </div>
+</header>
+
+<section id="timeline">
+  <div class="container timeline">
+    <div class="stickycol">
+      <div class="rail"></div>
+      <div class="progress" id="progress"></div>
+      <ul>
+        <li><a href="#edu">Education</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <div id="edu">
+        <h2>Education</h2>
+        <div class="grid2">
+          <div class="card tilt"><div class="inner">
+            <div class="small">2024 — present</div>
+            <div style="font-weight:600">Stanford University · PhD, French</div>
+          </div></div>
+          <div class="card tilt"><div class="inner">
+            <div class="small">2023</div>
+            <div style="font-weight:600">Erasmus Mundus — CLE (Triple M.A.)</div>
+            <div class="small">Bologna · Strasbourg · UCAD Dakar</div>
+          </div></div>
+          <div class="card tilt"><div class="inner">
+            <div class="small">2019</div>
+            <div style="font-weight:600">Obafemi Awolowo University · B.A. French</div>
+          </div></div>
+        </div>
+      </div>
+
+      <div id="research" style="margin-top:32px">
+        <h2>Research</h2>
+        <div class="grid2">
+          <div class="card tilt"><div class="inner">Francophone intertextual dialogues across Africa and diaspora.</div></div>
+          <div class="card tilt"><div class="inner">Negritude + Pan-Africanism in today’s cultural production.</div></div>
+          <div class="card tilt"><div class="inner">Postcolonial readings of power and resistance.</div></div>
+          <div class="card tilt"><div class="inner">Afrotopia and future-making in literature and criticism.</div></div>
+        </div>
+      </div>
+
+      <div id="projects" style="margin-top:32px">
+        <h2>Projects & Talks</h2>
+        <div class="card tilt"><div class="inner">
+          <div style="font-weight:600">Approaching the study of Yoruba diaspora</div>
+          <div class="small">Religious practice and the intangibility of Indigenous language — ASAA 2023 (listing).</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-end">
+      <h2>Publications & Writing</h2>
+      <a class="small" href="https://dlcl.stanford.edu/people/israel-winlade" target="_blank" rel="noreferrer">Profile</a>
+    </div>
+    <p class="small">Selected work.</p>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card tilt"><div class="inner">
+        <div style="font-weight:600">“What Shall We Do to Death?”</div>
+        <div class="small"><em>Wreaths for a Wayfarer</em> (2020).</div>
+        <a style="color:var(--cyan)" href="https://en.wikipedia.org/wiki/Wreaths_for_a_Wayfarer" target="_blank">Source</a>
+      </div></div>
+      <div class="card tilt"><div class="inner">
+        <div style="font-weight:600">“A Star Just Fell”</div>
+        <div class="small"><em>Wreaths for a Wayfarer</em> (2020).</div>
+        <a style="color:var(--cyan)" href="https://en.wikipedia.org/wiki/Wreaths_for_a_Wayfarer" target="_blank">Source</a>
+      </div></div>
+      <div class="card tilt"><div class="inner">
+        <div style="font-weight:600">Punocracy Prize for Satire</div>
+        <div class="small">Winner cohort (2019); featured author.</div>
+        <div class="small">
+          <a style="color:var(--cyan)" href="https://punocracy.com/punocracy-holds-first-prize-for-satire-award-ceremony-declares-nov-9-world-satire-day/" target="_blank">Punocracy</a> ·
+          <a style="color:var(--cyan)" href="https://www.premiumtimesng.com/entertainment/artsbooks/361971-group-holds-award-ceremony-for-satire-writing.html" target="_blank">Premium Times</a>
+        </div>
+      </div></div>
+    </div>
+    <div class="cloudwrap"><canvas id="cloud"></canvas></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <h2>Contact</h2>
+    <p class="small">Email: iwin [at] stanford.edu</p>
+    <form id="contactForm" style="display:grid;gap:12px;max-width:760px;margin-top:12px">
+      <input name="name" placeholder="Your name" class="card" style="padding:12px 14px">
+      <input name="email" placeholder="Email" class="card" style="padding:12px 14px">
+      <textarea name="message" placeholder="Message" rows="5" class="card" style="padding:12px 14px"></textarea>
+      <div style="display:flex;gap:12px">
+        <button class="btn mag" type="submit">Send</button>
+        <button class="btn mag" type="button" id="topBtn">Back to top</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>© <span id="year"></span> Israel Winlade · Data & photo: Stanford DLCL; Wreaths for a Wayfarer; Punocracy; Premium Times.</footer>
+
+<!-- Command Palette -->
+<div class="kbar-backdrop" id="kbBackdrop"></div>
+<div class="kbar" id="kb">
+  <input id="kbInput" placeholder="Type to jump… (e.g., Publications)">
+  <ul id="kbList"></ul>
+</div>
+
+<audio id="amb" src="ambient.wav" loop></audio>
+
+<script>
+// =============== spotlight cursor ===============
+addEventListener('mousemove', e=>{
+  document.documentElement.style.setProperty('--sx', e.clientX+'px');
+  document.documentElement.style.setProperty('--sy', e.clientY+'px');
+});
+
+// =============== typing headline ===============
+const phrases=[
+  "Research across Francophone worlds.",
+  "Academic inquiry. Cultural futures.",
+  "Literature, power, identity."
+];
+let pi=0, ti=0, typing=true;
+function typeStep(){
+  const p = phrases[pi];
+  const el = document.getElementById('type');
+  if(typing){
+    ti++; el.textContent = p.slice(0, ti);
+    if(ti>=p.length){ typing=false; setTimeout(typeStep, 1200); return; }
+    setTimeout(typeStep, 24);
+  }else{
+    // erase
+    ti--; el.textContent = p.slice(0, ti);
+    if(ti<=0){ typing=true; pi=(pi+1)%phrases.length; }
+    setTimeout(typeStep, 12);
+  }
+}
+typeStep();
+
+// =============== particles canvas ===============
+(function(){
+  const c = document.getElementById('particles');
+  const ctx = c.getContext('2d');
+  let dpr=1, w=0,h=0, raf=0, parts=[];
+  function resize(){
+    dpr = Math.max(1, devicePixelRatio||1);
+    w = c.clientWidth = innerWidth;
+    h = c.clientHeight = innerHeight;
+    c.width = Math.floor(w*dpr); c.height = Math.floor(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    init();
+  }
+  function init(){
+    parts = [];
+    const count = Math.floor((w*h)/16000);
+    for(let i=0;i<count;i++){
+      parts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.8,vy:(Math.random()-.5)*.8,r:1+Math.random()*2});
+    }
+  }
+  let mx=0,my=0;
+  addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of parts){
+      const dx=mx-p.x, dy=my-p.y, dist=Math.hypot(dx,dy)+.001, pull=Math.min(1.5, 80/(dist));
+      p.vx+=(dx/dist)*pull*.01; p.vy+=(dy/dist)*pull*.01;
+      p.x+=p.vx; p.y+=p.vy; p.vx*=.98; p.vy*=.98;
+      if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle="rgba(95,225,255,.9)"; ctx.fill();
+    }
+    raf=requestAnimationFrame(step);
+  }
+  addEventListener('resize', resize);
+  resize(); step();
+})();
+
+// =============== parallax math backgrounds ===============
+(function(){
+  const c = document.getElementById('parallax');
+  const x = c.getContext('2d');
+  function resize(){
+    c.width = innerWidth; c.height = innerHeight;
+  }
+  function draw(){
+    x.clearRect(0,0,c.width,c.height);
+    x.save();
+    // cyan field
+    x.strokeStyle = 'rgba(95,225,255,.15)';
+    x.lineWidth = 1;
+    for(let i=0;i<8;i++){
+      x.beginPath();
+      const o = i*80;
+      for(let t=0;t<=c.width;t+=12){
+        const y = c.height*0.3 + Math.sin((t+o)/120)*22*Math.cos((t+o)/240);
+        if(t===0) x.moveTo(t,y); else x.lineTo(t,y);
+      }
+      x.stroke();
+    }
+    // amber net
+    x.strokeStyle = 'rgba(255,204,102,.10)';
+    for(let j=0;j<6;j++){
+      x.beginPath();
+      const o = j*100;
+      for(let t=0;t<=c.height;t+=14){
+        const xx = c.width*0.65 + Math.cos((t+o)/130)*26*Math.sin((t+o)/260);
+        if(t===0) x.moveTo(xx,t); else x.lineTo(xx,t);
+      }
+      x.stroke();
+    }
+    x.restore();
+    requestAnimationFrame(draw);
+  }
+  addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+// =============== sticky progress ===============
+(function(){
+  const prog = document.getElementById('progress');
+  function onScroll(){
+    const doc = document.documentElement;
+    const total = doc.scrollHeight - innerHeight;
+    const p = Math.max(0, Math.min(1, scrollY / (total||1)));
+    prog.style.height = (p*100) + '%';
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// =============== 3D tilt ===============
+document.querySelectorAll('.tilt').forEach(el=>{
+  const inner = el.querySelector('.inner');
+  el.addEventListener('mousemove', e=>{
+    const r = el.getBoundingClientRect();
+    const x = e.clientX - (r.left + r.width/2);
+    const y = e.clientY - (r.top + r.height/2);
+    inner.style.transform = `rotateY(${x*0.06}deg) rotateX(${-y*0.06}deg)`;
+  });
+  el.addEventListener('mouseleave', ()=> inner.style.transform='');
+});
+
+// =============== magnetic buttons ===============
+document.querySelectorAll('.btn.mag').forEach(btn=>{
+  btn.addEventListener('mousemove', e=>{
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - (r.left + r.width/2);
+    const y = e.clientY - (r.top + r.height/2);
+    btn.style.transform = `translate(${x*0.06}px, ${y*0.08}px)`;
+  });
+  btn.addEventListener('mouseleave', ()=> btn.style.transform='');
+});
+
+// =============== command palette ===============
+const KB_ITEMS = [
+  {label:'Resume', href:'#contact'},
+  {label:'Publications', href:'#publications'},
+  {label:'Contact', href:'#contact'},
+  {label:'Research', href:'#research'},
+];
+const kb=document.getElementById('kb'), kbList=document.getElementById('kbList'), kbBackdrop=document.getElementById('kbBackdrop'), kbInput=document.getElementById('kbInput');
+function openKB(){ kb.style.display='block'; kbBackdrop.style.display='block'; kbInput.value=''; renderKB(''); kbInput.focus(); }
+function closeKB(){ kb.style.display='none'; kbBackdrop.style.display='none'; }
+function renderKB(q){
+  const f=KB_ITEMS.filter(i=>i.label.toLowerCase().includes(q.toLowerCase()));
+  kbList.innerHTML = f.map(i=>`<li data-href="${i.href}">${i.label}</li>`).join('');
+}
+document.addEventListener('keydown', e=>{
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openKB(); }
+  if(e.key==='Escape') closeKB();
+});
+kbBackdrop.addEventListener('click', closeKB);
+kbList.addEventListener('click', e=>{
+  const li = e.target.closest('li'); if(!li) return;
+  document.querySelector(li.dataset.href)?.scrollIntoView({behavior:'smooth'});
+  closeKB();
+});
+kbInput.addEventListener('input', e=> renderKB(e.target.value));
+
+// =============== citation cloud (canvas) ===============
+(function(){
+  const words = ["Negritude","Pan-Africanism","Afrotopia","postcolonial","diaspora","identity","power","resistance","Francophone","Africa","Sarr","Césaire","Senghor","Glissant","Yorùbá"];
+  const c = document.getElementById('cloud'); const ctx = c.getContext('2d');
+  function resize(){ c.width=c.clientWidth; c.height=c.clientHeight; }
+  addEventListener('resize', resize); resize();
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    const cx=c.width/2, cy=c.height/2;
+    words.forEach((w,i)=>{
+      const a = (i/words.length)*Math.PI*2 + t*0.003;
+      const r = Math.min(cx,cy)-20;
+      const x = cx + Math.cos(a)*r;
+      const y = cy + Math.sin(a)*r*0.6;
+      ctx.fillStyle = "rgba(255,255,255,.72)";
+      ctx.font = "14px Inter, system-ui";
+      ctx.textAlign = "center"; ctx.textBaseline="middle";
+      ctx.fillText(w,x,y);
+    });
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// =============== audio toggle ===============
+const amb=document.getElementById('amb');
+const audioBtn=document.getElementById('audioBtn');
+audioBtn.addEventListener('click', ()=>{
+  if(amb.paused){ amb.play().catch(()=>{}); audioBtn.firstChild.textContent='Mute '; }
+  else { amb.pause(); audioBtn.firstChild.textContent='Audio '; }
+});
+
+// =============== light/dark "mode" (simple invert) ===============
+document.getElementById('modeBtn').addEventListener('click', ()=>{
+  document.body.style.filter = document.body.style.filter ? '' : 'invert(1) hue-rotate(180deg)';
+});
+
+// =============== form ===============
+document.getElementById('contactForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  if(!fd.get('name') || !fd.get('email') || !fd.get('message')){
+    e.target.classList.remove('shake'); void e.target.offsetWidth; e.target.classList.add('shake'); return;
+  }
+  alert('Thanks — demo only.');
+  e.target.reset();
+});
+document.getElementById('topBtn').addEventListener('click', ()=> scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// =============== cursor sync for spotlight size on scroll (subtle) ===============
+let lastY = 0;
+addEventListener('scroll', ()=>{
+  const d = Math.abs(scrollY - lastY);
+  lastY = scrollY;
+  const size = Math.max(140, 240 - Math.min(100, d*0.5));
+  document.documentElement.style.setProperty('--spot', size+'px');
+});
+</script>
+</body>
+</html>
