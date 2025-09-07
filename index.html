@@ -3,318 +3,71 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Israel Winlade — Stanford PhD · French & Francophone Studies</title>
+<title>Israel Winlade — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
-<meta name="color-scheme" content="dark light">
 <style>
-:root{
-  /* New duotone-light palette */
-  --bg:#f5f7fb; --ink:#0d1117; --muted:#5d6473; --card:#ffffff; --line:#e9edf5;
-  --indigo:#3c37ff; --mint:#41ffd8; --violet:#7c3aed; --amber:#ffb454;
-  --glass:rgba(255,255,255,.82); --shadow:0 10px 40px rgba(11,16,24,.12);
-  --spot:280px; --r:16px;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;overflow-x:hidden}
-img{max-width:100%;display:block}
-.container{width:min(1200px,92vw);margin:0 auto}
-
-/* --- Global ornaments --- */
-.gridOverlay{position:fixed;inset:-20%;z-index:-5;pointer-events:none;opacity:.6;background-image:radial-gradient(circle at 1px 1px,#cad2e2 1px,transparent 1px);background-size:22px 22px;filter:contrast(110%) saturate(105%)}
-.noise{position:fixed;inset:0;z-index:-4;pointer-events:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 200 200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity=".035"/></svg>');opacity:.6}
-.spot{position:fixed;inset:0;pointer-events:none;background:radial-gradient(var(--spot) var(--spot) at var(--sx,50%) var(--sy,50%), rgba(60,55,255,.15), transparent 60%);mix-blend-mode:multiply;z-index:5}
-
-/* --- Navigation --- */
-.nav{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;display:flex;gap:8px;align-items:center;padding:8px;border-radius:999px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:var(--shadow)}
-.nav a,.nav .pill{padding:8px 12px;border-radius:999px;color:#111827}
-.nav a:hover{background:#eef2ff}
-
-/* --- Hero --- */
-.hero{position:relative;min-height:94svh;display:grid;place-items:center;padding-top:88px}
-.hero-grid{display:grid;gap:32px;align-items:center}
-@media(min-width:980px){.hero-grid{grid-template-columns:1.1fr .9fr}}
-.badge{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;color:#111827}
-h1{font-family:Spectral,ui-serif,Georgia;font-weight:700;line-height:1.04;font-size:clamp(32px,5vw,56px);margin:12px 0}
-.muted{color:var(--muted)}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-
-/* --- Sections --- */
-section{padding:96px 0}
-h2{font-family:Spectral,ui-serif,Georgia;font-size:30px;margin:0 0 14px}
-.card{position:relative;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
-.card::before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(60,55,255,.25),rgba(65,255,216,.25));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
-.grid2{display:grid;gap:18px}
-@media(min-width:900px){.grid2{grid-template-columns:repeat(2,1fr)}}
-
-/* --- Timeline (left sticky) --- */
-.timeline{display:grid;gap:40px}
-@media(min-width:1120px){.timeline{grid-template-columns:300px 1fr}}
-.sticky{position:sticky;top:108px;height:max-content;padding-left:28px}
-.rail{position:absolute;left:0;top:0;width:5px;height:100%;background:var(--line);border-radius:3px}
-.progress{position:absolute;left:0;top:0;width:5px;height:0;background:linear-gradient(to bottom,var(--indigo),var(--mint));border-radius:3px;box-shadow:0 0 22px rgba(60,55,255,.35)}
-.sticky ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.sticky a{color:#1f2937}
-.sticky a:hover{color:var(--indigo)}
-
-/* --- Interactive controls --- */
-.btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;transition:transform .2s}
-.btn:after{content:"";position:absolute;inset:-10px;border-radius:22px;box-shadow:0 0 50px rgba(60,55,255,.22);opacity:0;transition:.25s}
-.btn:hover:after{opacity:1}
-.btn.mag:hover{transform:translateY(-1px)}
-
-/* --- Tilt + reveal --- */
-.tilt{transform-style:preserve-3d;perspective:1000px}
-.tilt .inner{transform:translateZ(0);transition:transform .22s ease, filter .22s}
-.card.reveal{transform:translateY(12px) scale(.985);opacity:0}
-.card.reveal.in{transform:none;opacity:1;transition:.6s cubic-bezier(.17,.84,.44,1)}
-
-/* --- Command palette --- */
-.kb-backdrop{position:fixed;inset:0;background:rgba(6,10,18,.35);backdrop-filter:blur(10px);display:none;z-index:80}
-.kb{position:fixed;left:50%;top:96px;transform:translateX(-50%);width:min(760px,92vw);border:1px solid var(--line);border-radius:22px;background:var(--glass);box-shadow:0 35px 100px rgba(11,16,24,.25);display:none;z-index:81}
-.kb input{width:100%;background:transparent;color:#111827;padding:14px 16px;border:0;outline:none}
-.kb ul{max-height:52vh;overflow:auto;margin:0;padding:0;list-style:none}
-.kb li{padding:12px 16px;border-top:1px solid var(--line);cursor:pointer}
-.kb li:hover{background:#eef2ff}
-.cursorTrail{position:fixed;width:12px;height:12px;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 30% 30%, var(--indigo), transparent 60%);filter:blur(1px);opacity:.0;transition:opacity .15s;z-index:90}
-
-/* --- Citation cloud --- */
-.cloud{height:320px;position:relative;perspective:900px}
-.cloud span{position:absolute;left:50%;top:50%;transform-style:preserve-3d;color:#111827cc;font-size:14px;cursor:pointer;transition:transform .2s,color .2s}
-.cloud span:hover{color:var(--indigo)}
-.cloud.hidden{opacity:0;pointer-events:none;transition:opacity .3s}
-
-/* --- Light/Dark modes --- */
-.dark{--bg:#0b0f16;--ink:#e9eef7;--muted:#a2a9b7;--card:#0f1420;--line:#1b2331;--glass:rgba(18,22,34,.72)}
-.dark .nav{background:rgba(18,22,34,.72)}
-.dark .btn{background:#0f1420;color:var(--ink)}
-
-@media(max-width:640px){:root{--spot:180px}}
+body{margin:0;font-family:Inter,Arial;background:#07080C;color:#eaeef6}
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:10px;padding:10px;border-radius:999px;background:rgba(12,14,22,.6);backdrop-filter:blur(14px)}
+.nav a,.nav span{padding:10px 14px;border-radius:999px}
+.btn{cursor:pointer;border:none;border-radius:14px;padding:10px 16px;background:#111;color:#fff}
+.hero{padding:120px 20px;max-width:800px;margin:auto;text-align:center}
+.hero h1{font-family:Spectral,serif;font-size:42px;margin:0 0 16px}
+.hero p{color:#aeb6c9}
 </style>
 </head>
 <body>
-<div class="gridOverlay"></div>
-<div class="noise"></div>
-<canvas id="bgGraph" class="bg"></canvas>
-<canvas id="bgMolecules" class="bg"></canvas>
-<canvas id="particles"></canvas>
-<div class="spot" aria-hidden></div>
-
-<nav class="nav container">
-  <span class="pill" style="font-weight:800">Israel Winlade</span>
+<nav class="nav">
+  <span>Israel Winlade</span>
   <a href="#research">Research</a>
-  <a href="#timeline">Timeline</a>
   <a href="#publications">Publications</a>
   <a href="#contact">Contact</a>
-  <button class="btn mag" id="modeBtn" title="Toggle theme">Mode</button>
-  <button class="btn mag" id="audioBtn" title="Ambient audio">Audio <span id="dot" style="width:12px;height:12px;border-radius:999px;background:#11182722;display:inline-block"></span></button>
+  <button class="btn" id="langBtn">FR</button>
 </nav>
 
 <header class="hero">
-  <div class="container hero-grid">
-    <div>
-      <span class="badge">Stanford · French</span>
-      <h1 id="type"></h1>
-      <p class="muted">Negritude · Pan-African thought · postcolonial theory · Afrotopia · identity and power in African/diaspora cultural production.</p>
-      <div class="row" style="margin-top:14px">
-        <a href="#publications" class="btn mag">Publications</a>
-        <a href="#contact" class="btn mag">Invite to speak</a>
-      </div>
-    </div>
-    <div>
-      <div class="card tilt reveal">
-        <div class="inner">
-          <img src="https://dlcl.stanford.edu/sites/dlcl/files/styles/hs_medium_square_360x360/public/media/image/isreal_winlade-profile_photo_0.jpg.webp?itok=pIxh8DJF" alt="Israel Winlade portrait" style="border-radius:12px"/>
-        </div>
-      </div>
-      <p class="muted" style="font-size:12px;margin-top:6px">Photo: Stanford DLCL</p>
-    </div>
-  </div>
+  <h1 id="heroTitle">Research across Francophone worlds.</h1>
+  <p id="heroLead">Negritude · Pan-African thought · postcolonial theory · Afrotopia · identity and power in African/diaspora cultural production.</p>
 </header>
 
-<section id="timeline">
-  <div class="container timeline">
-    <div class="sticky">
-      <div class="rail"></div>
-      <div class="progress" id="progress"></div>
-      <ul>
-        <li><a href="#edu">Education</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#publications">Publications</a></li>
-      </ul>
-    </div>
-    <div>
-      <div id="edu">
-        <h2>Education</h2>
-        <div class="grid2">
-          <div class="card tilt reveal"><div class="inner">
-            <div class="muted" style="font-size:13px">2024 — present</div>
-            <div style="font-weight:700">Stanford University · PhD, French</div>
-          </div></div>
-          <div class="card tilt reveal"><div class="inner">
-            <div class="muted" style="font-size:13px">2023</div>
-            <div style="font-weight:700">Erasmus Mundus — CLE (Triple M.A.)</div>
-            <div class="muted" style="font-size:13px">Bologna · Strasbourg · UCAD Dakar</div>
-          </div></div>
-          <div class="card tilt reveal"><div class="inner">
-            <div class="muted" style="font-size:13px">2019</div>
-            <div style="font-weight:700">Obafemi Awolowo University · B.A. French</div>
-          </div></div>
-        </div>
-      </div>
-
-      <div id="research" style="margin-top:36px">
-        <h2>Research</h2>
-        <div class="grid2">
-          <div class="card tilt reveal"><div class="inner">Francophone intertextual dialogues across Africa and diaspora.</div></div>
-          <div class="card tilt reveal"><div class="inner">Negritude + Pan-Africanism in today’s cultural production.</div></div>
-          <div class="card tilt reveal"><div class="inner">Postcolonial readings of power and resistance.</div></div>
-          <div class="card tilt reveal"><div class="inner">Afrotopia and future-making in literature and criticism.</div></div>
-        </div>
-      </div>
-
-      <div id="projects" style="margin-top:36px">
-        <h2>Projects & Talks</h2>
-        <div class="card tilt reveal"><div class="inner">
-          <div style="font-weight:700">Approaching the study of Yoruba diaspora</div>
-          <div class="muted" style="font-size:13px">Religious practice and the intangibility of Indigenous language — ASAA 2023 (listing).</div>
-        </div></div>
-      </div>
-    </div>
-  </div>
+<section id="research" style="padding:80px 20px;max-width:800px;margin:auto">
+  <h2>Research</h2>
+  <ul id="researchList">
+    <li>Francophone intertextual dialogues across Africa and diaspora.</li>
+    <li>Negritude + Pan-Africanism in today’s cultural production.</li>
+    <li>Postcolonial readings of power and resistance.</li>
+    <li>Afrotopia and future-making in literature and criticism.</li>
+  </ul>
 </section>
 
-<section id="publications">
-  <div class="container">
-    <div style="display:flex;align-items:end;justify-content:space-between;gap:16px">
-      <h2>Publications & Writing</h2>
-      <a class="muted" href="https://dlcl.stanford.edu/people/israel-winlade" target="_blank" rel="noreferrer">Profile</a>
-    </div>
-    <p class="muted">Selected work.</p>
-    <div class="grid2" style="margin-top:16px">
-      <div class="card tilt reveal"><div class="inner">
-        <div style="font-weight:700">“What Shall We Do to Death?”</div>
-        <div class="muted" style="font-size:13px"><em>Wreaths for a Wayfarer</em> (2020).</div>
-        <a style="color:var(--indigo)" href="https://en.wikipedia.org/wiki/Wreaths_for_a_Wayfarer" target="_blank">Source</a>
-      </div></div>
-      <div class="card tilt reveal"><div class="inner">
-        <div style="font-weight:700">“A Star Just Fell”</div>
-        <div class="muted" style="font-size:13px"><em>Wreaths for a Wayfarer</em> (2020).</div>
-        <a style="color:var(--indigo)" href="https://en.wikipedia.org/wiki/Wreaths_for_a_Wayfarer" target="_blank">Source</a>
-      </div></div>
-      <div class="card tilt reveal"><div class="inner">
-        <div style="font-weight:700">Punocracy Prize for Satire</div>
-        <div class="muted" style="font-size:13px">Winner cohort (2019); featured author.</div>
-        <div style="font-size:13px">
-          <a style="color:var(--indigo)" href="https://punocracy.com/punocracy-holds-first-prize-for-satire-award-ceremony-declares-nov-9-world-satire-day/" target="_blank">Punocracy</a>
-          ·
-          <a style="color:var(--indigo)" href="https://www.premiumtimesng.com/entertainment/artsbooks/361971-group-holds-award-ceremony-for-satire-writing.html" target="_blank">Premium Times</a>
-        </div>
-      </div></div>
-    </div>
-    <div class="card" style="margin-top:18px">
-      <div class="muted" style="margin-bottom:8px">Hover to explore keywords</div>
-      <div id="cloud" class="cloud hidden"></div>
-    </div>
-  </div>
+<section id="publications" style="padding:80px 20px;max-width:800px;margin:auto">
+  <h2>Publications</h2>
+  <ul id="pubList">
+    <li>“What Shall We Do to Death?” – Wreaths for a Wayfarer (2020)</li>
+    <li>“A Star Just Fell” – Wreaths for a Wayfarer (2020)</li>
+  </ul>
 </section>
 
-<section id="contact">
-  <div class="container">
-    <h2>Contact</h2>
-    <p class="muted">Email: iwin [at] stanford.edu</p>
-    <form id="contactForm" style="display:grid;gap:12px;max-width:760px;margin-top:12px">
-      <input name="name" placeholder="Your name" class="card" style="padding:12px 14px">
-      <input name="email" placeholder="Email" class="card" style="padding:12px 14px">
-      <textarea name="message" placeholder="Message" rows="5" class="card" style="padding:12px 14px"></textarea>
-      <div class="row">
-        <button class="btn mag" type="submit">Send</button>
-        <button class="btn mag" type="button" id="topBtn">Back to top</button>
-      </div>
-    </form>
-  </div>
+<section id="contact" style="padding:80px 20px;max-width:800px;margin:auto">
+  <h2>Contact</h2>
+  <p>Email: iwin [at] stanford.edu</p>
 </section>
-
-<footer class="muted" style="text-align:center;padding:70px 0">© <span id="year"></span> Israel Winlade · Data & photo: Stanford DLCL; Wreaths for a Wayfarer; Punocracy; Premium Times.</footer>
-
-<div class="kb-backdrop" id="kbBackdrop"></div>
-<div class="kb" id="kb">
-  <input id="kbInput" placeholder="Type to jump… (e.g., Publications)">
-  <ul id="kbList"></ul>
-</div>
-<div class="cursorTrail" id="trail"></div>
 
 <script>
-// Spotlight cursor
-addEventListener('mousemove', e=>{document.documentElement.style.setProperty('--sx', e.clientX+'px');document.documentElement.style.setProperty('--sy', e.clientY+'px');});
-
-// AI-like typewriter
-const typeEl=document.getElementById('type');
-const lines=['Research across Francophone worlds.','Academic inquiry. Cultural futures.','Literature, power, identity.'];
-let li=0, ti=0, mode='type';
-(function loop(){const s=lines[li]; if(mode==='type'){ti++; typeEl.textContent=s.slice(0,ti); if(ti>=s.length){mode='pause'; setTimeout(()=>mode='erase', 900);} } else if(mode==='erase'){ti--; typeEl.textContent=s.slice(0,ti); if(ti<=0){li=(li+1)%lines.length; mode='type';} } requestAnimationFrame(()=>setTimeout(loop, mode==='type'?22:12));})();
-
-// Parallax backgrounds: graphs + molecules
-(function graph(){const c=document.getElementById('bgGraph');const x=c.getContext('2d');function size(){c.width=innerWidth*2; c.height=innerHeight*2;} size(); addEventListener('resize',size);
-  let t=0; (function draw(){x.clearRect(0,0,c.width,c.height); x.save(); x.scale(2,2); x.lineWidth=1; x.strokeStyle='rgba(60,55,255,.18)';
-    for(let i=0;i<8;i++){x.beginPath();const o=i*80+t*.6; for(let u=0;u<=innerWidth;u+=12){const y=innerHeight*.26 + Math.sin((u+o)/120)*22*Math.cos((u+o)/240); u===0?x.moveTo(u,y):x.lineTo(u,y);} x.stroke();}
-    x.strokeStyle='rgba(65,255,216,.12)'; for(let j=0;j<6;j++){x.beginPath();const o=j*110-t*.4; for(let v=0;v<=innerHeight;v+=14){const xx=innerWidth*.68 + Math.cos((v+o)/130)*26*Math.sin((v+o)/260); v===0?x.moveTo(xx,v):x.lineTo(xx,v);} x.stroke();}
-    x.restore(); t+=1; requestAnimationFrame(draw); })(); })();
-(function molecules(){const c=document.getElementById('bgMolecules');const g=c.getContext('2d');function size(){c.width=innerWidth; c.height=innerHeight;} size(); addEventListener('resize',size);
-  const nodes=Array.from({length:80},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight, r:1+Math.random()*2}));
-  let t=0; (function draw(){g.clearRect(0,0,c.width,c.height); g.strokeStyle='rgba(17,24,39,.06)'; g.fillStyle='rgba(17,24,39,.08)';
-    for(const n of nodes){const x=n.x+Math.sin((t+n.x)*.0008)*8; const y=n.y+Math.cos((t+n.y)*.001)*8; g.beginPath(); g.arc(x,y,n.r,0,Math.PI*2); g.fill(); for(const m of nodes){const dx=m.x-x, dy=m.y-y, d=Math.hypot(dx,dy); if(d<90){g.beginPath(); g.moveTo(x,y); g.lineTo(m.x,m.y); g.stroke();}}}
-    t+=16; requestAnimationFrame(draw); })(); })();
-
-// Particles
-(function(){const c=document.getElementById('particles');const ctx=c.getContext('2d');let dpr=1, w=0, h=0, parts=[], mx=0, my=0; function resize(){dpr=Math.max(1,devicePixelRatio||1); w=c.width=innerWidth*dpr; h=c.height=innerHeight*dpr; ctx.setTransform(1,0,0,1,0,0);} function init(){parts=[]; const n=Math.floor((innerWidth*innerHeight)/14000); for(let i=0;i<n;i++){parts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.8,vy:(Math.random()-.5)*.8,r:1+Math.random()*2});}} addEventListener('mousemove',e=>{mx=e.clientX; my=e.clientY}); function step(){ctx.clearRect(0,0,w,h); ctx.save(); ctx.scale(dpr,dpr); for(const p of parts){const dx=mx-p.x, dy=my-p.y, dist=Math.hypot(dx,dy)+1e-3, pull=Math.min(1.5,80/dist); p.vx+=(dx/dist)*pull*.01; p.vy+=(dy/dist)*pull*.01; p.x+=p.vx; p.y+=p.vy; p.vx*=.985; p.vy*=.985; if(p.x<0||p.x>innerWidth)p.vx*=-1; if(p.y<0||p.y>innerHeight)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(60,55,255,.8)'; ctx.fill(); } ctx.restore(); requestAnimationFrame(step);} addEventListener('resize',()=>{resize();init()}); resize(); init(); step(); })();
-
-// Sticky progress
-(function(){const bar=document.getElementById('progress'); function onScroll(){const doc=document.documentElement; const total=doc.scrollHeight-innerHeight; const p=Math.max(0,Math.min(1,scrollY/(total||1))); bar.style.height=(p*100)+'%'; } addEventListener('scroll',onScroll,{passive:true}); onScroll();})();
-
-// Tilt + reveal
-const io=new IntersectionObserver((ents)=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}})},{threshold:0.15});
-Array.from(document.querySelectorAll('.reveal')).forEach(el=>io.observe(el));
-document.querySelectorAll('.tilt').forEach(el=>{const inner=el.querySelector('.inner'); el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect(); const x=e.clientX-(r.left+r.width/2); const y=e.clientY-(r.top+r.height/2); inner.style.transform=`rotateY(${x*0.06}deg) rotateX(${-y*0.06}deg) translateZ(6px)`; inner.style.filter='drop-shadow(0 8px 20px rgba(60,55,255,.15))';}); el.addEventListener('mouseleave',()=>{inner.style.transform=''; inner.style.filter='';});});
-
-// Magnetic buttons
-Array.from(document.querySelectorAll('.btn')).forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect(); const x=e.clientX-(r.left+r.width/2); const y=e.clientY-(r.top+r.height/2); b.style.transform=`translate(${x*.06}px, ${y*.08}px)`;}); b.addEventListener('mouseleave',()=>b.style.transform='');});
-
-// Command palette + cursor trail
-const KB=[{label:'Resume',href:'#contact'},{label:'Publications',href:'#publications'},{label:'Contact',href:'#contact'},{label:'Research',href:'#research'}];
-const kb=document.getElementById('kb'), back=document.getElementById('kbBackdrop'), list=document.getElementById('kbList'), inp=document.getElementById('kbInput');
-const trail=document.getElementById('trail');
-function openKB(){kb.style.display='block'; back.style.display='block'; trail.style.opacity=1; inp.value=''; renderKB(''); inp.focus();}
-function closeKB(){kb.style.display='none'; back.style.display='none'; trail.style.opacity=0;}
-function renderKB(q){const f=KB.filter(i=>i.label.toLowerCase().includes(q.toLowerCase())); list.innerHTML=f.map(i=>`<li data-href="${i.href}">${i.label}</li>`).join('');}
-addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault(); openKB();} if(e.key==='Escape') closeKB();});
-back.addEventListener('click',closeKB);
-list.addEventListener('click',e=>{const li=e.target.closest('li'); if(!li) return; document.querySelector(li.dataset.href)?.scrollIntoView({behavior:'smooth'}); closeKB();});
-inp.addEventListener('input',e=>renderKB(e.target.value));
-addEventListener('mousemove',e=>{trail.style.left=e.clientX-6+'px'; trail.style.top=e.clientY-6+'px';});
-
-// Citation cloud
-const cloud=document.getElementById('cloud');
-const words=['Negritude','Pan-Africanism','Afrotopia','postcolonial','diaspora','identity','power','resistance','Francophone','Africa','Sarr','Césaire','Senghor','Glissant','Yorùbá'];
-function layoutCloud(){const cx=cloud.clientWidth/2, cy=cloud.clientHeight/2; cloud.innerHTML=''; const N=words.length; for(let i=0;i<N;i++){const s=document.createElement('span'); s.textContent=words[i]; const a=i/N*Math.PI*2; const r=Math.min(cx,cy)-24; const x=Math.cos(a)*r, y=Math.sin(a)*r*.62, z=Math.sin(a*2)*80; s.style.transform=`translate3d(${x}px, ${y}px, ${z}px)`; s.addEventListener('click',()=>document.getElementById('publications').scrollIntoView({behavior:'smooth'})); cloud.appendChild(s);} }
-layoutCloud(); addEventListener('resize',layoutCloud);
-document.querySelector('#publications .card').addEventListener('mouseenter',()=>cloud.classList.remove('hidden'));
-document.querySelector('#publications .card').addEventListener('mouseleave',()=>cloud.classList.add('hidden'));
-
-// Ambient synth (WebAudio)
-let ctx,gain,playing=false; function makeAudio(){ctx=new (window.AudioContext||window.webkitAudioContext)(); gain=ctx.createGain(); gain.gain.value=0.06; gain.connect(ctx.destination); const o1=ctx.createOscillator(); o1.type='sine'; o1.frequency.value=220; const o2=ctx.createOscillator(); o2.type='triangle'; o2.frequency.value=330; const lfo=ctx.createOscillator(); lfo.frequency.value=0.08; const lfoG=ctx.createGain(); lfoG.gain.value=10; lfo.connect(lfoG); lfoG.connect(o1.frequency); lfoG.connect(o2.frequency); o1.connect(gain); o2.connect(gain); o1.start(); o2.start(); lfo.start(); }
-const audioBtn=document.getElementById('audioBtn'); audioBtn.addEventListener('click',()=>{ if(!ctx){makeAudio(); playing=true; audioBtn.firstChild.textContent='Mute '; return;} if(playing){gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.4); playing=false; audioBtn.firstChild.textContent='Audio ';} else {gain.gain.cancelScheduledValues(ctx.currentTime); gain.gain.setValueAtTime(0.06, ctx.currentTime); playing=true; audioBtn.firstChild.textContent='Mute ';} });
-
-// Theme toggle
-const modeBtn=document.getElementById('modeBtn'); modeBtn.addEventListener('click',()=>{document.body.classList.toggle('dark');});
-
-// Form
-const form=document.getElementById('contactForm'); form.addEventListener('submit',e=>{e.preventDefault(); const fd=new FormData(form); if(!fd.get('name')||!fd.get('email')||!fd.get('message')){form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake'); return;} alert('Thanks — demo only.'); form.reset();});
-
-document.getElementById('topBtn').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
-
-document.getElementById('year').textContent=new Date().getFullYear();
+const langBtn=document.getElementById('langBtn');
+let current='en';
+const content={
+ en:{heroTitle:'Research across Francophone worlds.',heroLead:'Negritude · Pan-African thought · postcolonial theory · Afrotopia · identity and power in African/diaspora cultural production.',research:['Francophone intertextual dialogues across Africa and diaspora.','Negritude + Pan-Africanism in today’s cultural production.','Postcolonial readings of power and resistance.','Afrotopia and future-making in literature and criticism.'],pub:['“What Shall We Do to Death?” – Wreaths for a Wayfarer (2020)','“A Star Just Fell” – Wreaths for a Wayfarer (2020)']},
+ fr:{heroTitle:'Recherche dans les mondes francophones.',heroLead:'Négritude · Pensée panafricaine · théorie postcoloniale · Afrotopie · identité et pouvoir dans la production culturelle africaine et de la diaspora.',research:['Dialogues intertextuels francophones en Afrique et dans la diaspora.','La Négritude et le panafricanisme dans la production culturelle contemporaine.','Lectures postcoloniales du pouvoir et de la résistance.','Afrotopie et construction des futurs en littérature et critique.'],pub:['« Que ferons-nous de la mort ? » – Wreaths for a Wayfarer (2020)','« Une étoile vient de tomber » – Wreaths for a Wayfarer (2020)']}
+};
+function renderLang(l){
+ document.getElementById('heroTitle').textContent=content[l].heroTitle;
+ document.getElementById('heroLead').textContent=content[l].heroLead;
+ document.getElementById('researchList').innerHTML=content[l].research.map(i=>`<li>${i}</li>`).join('');
+ document.getElementById('pubList').innerHTML=content[l].pub.map(i=>`<li>${i}</li>`).join('');
+ langBtn.textContent=l==='en'?'FR':'EN';
+ current=l;
+}
+langBtn.addEventListener('click',()=>{renderLang(current==='en'?'fr':'en');});
 </script>
 </body>
 </html>
