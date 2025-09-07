@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Israel Winlade — Academic Portfolio</title>
+  <meta name="description" content="PhD in French at Stanford. Negritude, Pan-Africanism, postcolonial thought, Afrotopia, identity and power." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0b10; --ink:#e9eaee; --card:#0e1018;
+      --neonCyan:#5fe1ff; --neonAmber:#ffcc66;
+      --spot:240px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial; line-height:1.5;}
+    .spectral{font-family:Spectral,Georgia,serif}
+    a{color:var(--neonCyan); text-decoration:none}
+    .container{width:min(1100px,92vw); margin-inline:auto}
+    .nav{position:fixed; left:50%; top:16px; transform:translateX(-50%); display:flex; gap:.5rem; align-items:center; padding:.5rem; border:1px solid #ffffff1a; background:#0e1018a0; backdrop-filter:blur(8px); border-radius:999px; z-index:50}
+    .nav a,.nav button{padding:.5rem .75rem; border-radius:999px; color:inherit; background:transparent; border:0; cursor:pointer}
+    .spotlight{position:fixed; inset:0; pointer-events:none; background:radial-gradient(var(--spot) var(--spot) at var(--sx,50%) var(--sy,50%), #5fe1ff1f, transparent 60%); mix-blend-mode:screen; z-index:30}
+    .parallax{position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden}
+    .layer{position:absolute; inset:-10%; opacity:.2; background-size:cover; filter:contrast(120%) saturate(110%)}
+    header{min-height:90svh; position:relative; display:grid; place-items:center; padding-top:96px}
+    .grid{display:grid; gap:2rem}
+    @media(min-width:900px){ .grid-2{grid-template-columns:1fr 1fr} }
+    .badge{display:inline-block; padding:.25rem .6rem; border-radius:999px; background:#ffffff0d; border:1px solid #ffffff26; font-size:.75rem; letter-spacing:.04em}
+    .buttons{display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem}
+    .btn{position:relative; display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:14px; border:1px solid #ffffff1a; background:#0e101899; backdrop-filter:blur(8px); cursor:pointer; transition:box-shadow .2s}
+    .btn::after{content:""; position:absolute; inset:-8px; border-radius:20px; box-shadow:0 0 40px #5fe1ff38; opacity:0; transition:.25s}
+    .btn:hover{box-shadow:0 0 20px #5fe1ff59}
+    .btn:hover::after{opacity:1}
+    .card{border:1px solid #ffffff1a; background:#0e101899; backdrop-filter:blur(8px); border-radius:16px; padding:1rem}
+    .card.tilt{transform-style:preserve-3d; perspective:1000px}
+    .img{width:100%; height:100%; object-fit:cover; border-radius:14px}
+    section{padding-block:96px}
+    .timeline{display:grid; grid-template-columns:280px 1fr; gap:2rem}
+    @media(max-width:900px){ .timeline{grid-template-columns:1fr} }
+    .sticky{position:sticky; top:104px; height:fit-content}
+    .rail{position:relative; padding-left:24px}
+    .rail .base{position:absolute; left:0; top:0; width:4px; height:100%; background:#ffffff1a; border-radius:2px}
+    .rail .progress{position:absolute; left:0; top:0; width:4px; height:0%; background:linear-gradient(#5fe1ff,#ffcc66); border-radius:2px}
+    .rail ul{list-style:none; padding:0; margin:0}
+    .rail li{margin:.6rem 0}
+    .rail a{color:inherit}
+    h1{font-size:clamp(32px,6vw,60px); margin:.2rem 0}
+    h2{font-size:clamp(22px,3.2vw,28px); margin:.2rem 0 1rem}
+    p.muted{color:#ffffffb3; margin:.5rem 0}
+    /* citation cloud */
+    .cloud{position:relative; height:300px}
+    .cloud span{position:absolute; font-size:14px; color:#ffffffb3; cursor:pointer; transition:transform .15s, color .15s}
+    .cloud span:hover{color:var(--neonCyan)}
+    /* command palette */
+    .kbar-bg{position:fixed; inset:0; background:#0006; backdrop-filter:blur(8px); display:none; z-index:60}
+    .kbar{position:fixed; left:50%; top:96px; transform:translateX(-50%); width:min(720px,92vw); border-radius:16px; border:1px solid #ffffff1a; background:#ffffff0d; box-shadow:0 20px 60px #0006; display:none}
+    .kbar input{width:100%; background:transparent; outline:0; color:var(--ink); padding:12px 16px; border:0}
+    .kbar ul{max-height:50vh; overflow:auto; margin:0; padding:0; list-style:none}
+    .kbar li{padding:12px 16px; border-top:1px solid #ffffff1a; cursor:pointer}
+    /* contact */
+    form input, form textarea{width:100%; border-radius:14px; border:1px solid #ffffff1a; background:#ffffff0d; color:var(--ink); padding:12px 16px; outline:none}
+    form input:focus, form textarea:focus{border-color:var(--neonCyan)}
+    .shake{animation:shake .35s}
+    @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+    /* light mode */
+    .light body{background:#fff;color:#000}
+  </style>
+</head>
+<body>
+  <div class="spotlight" aria-hidden="true"></div>
+  <div class="parallax" aria-hidden="true">
+    <div class="layer" style="background-image:radial-gradient(1000px 600px at 20% 10%, #5fe1ff1f, transparent 60%)"></div>
+    <div class="layer" style="background-image:radial-gradient(800px 500px at 90% 90%, #ffcc6619, transparent 60%)"></div>
+  </div>
+
+  <nav class="nav">
+    <strong>Israel Winlade</strong>
+    <a href="#research">Research</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#publications">Publications</a>
+    <a href="#contact">Contact</a>
+    <button id="modeBtn" class="btn">Mode</button>
+    <button id="audioBtn" class="btn">Audio<span id="dot" style="width:10px;height:10px;border-radius:999px;background:#ffffff40;display:inline-block"></span></button>
+  </nav>
+
+  <header class="container">
+    <div class="grid grid-2" style="position:relative">
+      <div>
+        <span class="badge">Stanford · French</span>
+        <h1 class="spectral" id="typewriter">Research across Francophone worlds.</h1>
+        <p class="muted">Negritude · Pan-African thought · postcolonial theory · Afrotopia · identity and power in African/diaspora cultural production.</p>
+        <div class="buttons">
+          <a href="#publications" class="btn">Publications</a>
+          <a href="#contact" class="btn">Invite to speak</a>
+        </div>
+      </div>
+      <div>
+        <div class="card tilt" id="photoCard">
+          <img class="img" src="https://dlcl.stanford.edu/sites/dlcl/files/styles/hs_medium_square_360x360/public/media/image/isreal_winlade-profile_photo_0.jpg.webp?itok=pIxh8DJF" alt="Israel Winlade"/>
+        </div>
+        <p class="muted" style="font-size:12px">Photo: Stanford DLCL</p>
+      </div>
+    </div>
+    <canvas id="particles" style="position:absolute; inset:0; z-index:-1"></canvas>
+  </header>
+
+  <section id="timeline">
+    <div class="container timeline">
+      <div class="sticky">
+        <div class="rail">
+          <div class="base"></div>
+          <div class="progress" id="progress"></div>
+          <ul>
+            <li><a href="#edu">Education</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#publications">Publications</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div id="edu">
+          <h2 class="spectral">Education</h2>
+          <div class="grid grid-2">
+            <div class="card tilt">
+              <div class="muted" style="font-size:13px">2024 — present</div>
+              <div><strong>Stanford University</strong> · PhD, French</div>
+            </div>
+            <div class="card tilt">
+              <div class="muted" style="font-size:13px">2023</div>
+              <div><strong>Erasmus Mundus — CLE</strong> (Triple M.A.)</div>
+              <div class="muted">Bologna · Strasbourg · UCAD Dakar</div>
+            </div>
+            <div class="card tilt">
+              <div class="muted" style="font-size:13px">2019</div>
+              <div><strong>Obafemi Awolowo University</strong> · B.A. French</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="research" style="margin-top:48px">
+          <h2 class="spectral">Research</h2>
+          <div class="grid grid-2">
+            <div class="card tilt">Francophone intertextual dialogues across Africa and diaspora.</div>
+            <div class="card tilt">Negritude + Pan-Africanism in today’s cultural production.</div>
+            <div class="card tilt">Postcolonial readings of power and resistance.</div>
+            <div class="card tilt">Afrotopia and future-making in literature and criticism.</div>
+          </div>
+        </div>
+
+        <div id="projects" style="margin-top:48px">
+          <h2 class="spectral">Projects & Talks</h2>
+          <div class="card tilt">
+            <div><strong>Approaching the study of Yoruba diaspora</strong></div>
+            <div class="muted">Religious practice and the intangibility of Indigenous language — ASAA 2023 (listing).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:1rem">
+        <h2 class="spectral">Publications & Writing</h2>
+        <a href="https://dlcl.stanford.edu/people/israel-winlade" class="muted">Profile</a>
+      </div>
+      <p class="muted">Selected work.</p>
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="card tilt">
+          <div><strong>“What Shall We Do to Death?”</strong></div>
+          <div class="muted"><em>Wreaths for a Wayfarer</em> (2020).</div>
+          <a href="https://en.wikipedia.org/wiki/Wreaths_for_a_Wayfarer">Source</a>
+        </div>
+        <div class="card tilt">
+          <div><strong>“A Star Just Fell”</strong></div>
+          <div class="muted"><em>Wreaths for a Wayfarer</em> (2020).</div>
+          <a href="https://en.wikipedia.org/wiki/Wreaths_for_a_Wayfarer">Source</a>
+        </div>
+        <div class="card tilt">
+          <div><strong>Punocracy Prize for Satire</strong></div>
+          <div class="muted">Winner cohort (2019); featured author.</div>
+          <div style="font-size:14px">
+            <a href="https://punocracy.com/punocracy-holds-first-prize-for-satire-award-ceremony-declares-nov-9-world-satire-day/">Punocracy</a> ·
+            <a href="https://www.premiumtimesng.com/entertainment/artsbooks/361971-group-holds-award-ceremony-for-satire-writing.html">Premium Times</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cloud" id="cloud" style="margin-top:24px"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="spectral">Contact</h2>
+      <p class="muted">Email: iwin [at] stanford.edu</p>
+      <form id="contactForm" class="grid" style="gap:12px; margin-top:12px">
+        <input name="name" placeholder="Your name">
+        <input name="email" placeholder="Email">
+        <textarea name="message" rows="5" placeholder="Message"></textarea>
+        <div class="buttons">
+          <button class="btn" type="submit">Send</button>
+          <button class="btn" type="button" onclick="window.scrollTo({top:0, behavior:'smooth'})">Back to top</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="container" style="padding:32px 0; text-align:center; color:#ffffff80; font-size:14px">
+    © <span id="year"></span> Israel Winlade · Data & photo: Stanford DLCL; Wreaths for a Wayfarer; Punocracy; Premium Times.
+  </footer>
+
+  <!-- Command palette -->
+  <div class="kbar-bg" id="kbarBg"></div>
+  <div class="kbar" id="kbar">
+    <input id="kbarInput" placeholder="Type to jump… (e.g., Publications)">
+    <ul id="kbarList"></ul>
+  </div>
+
+  <audio id="ambient" src="assets/ambient.wav" loop></audio>
+
+<script>
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Spotlight cursor
+window.addEventListener('mousemove', e => {
+  document.documentElement.style.setProperty('--sx', e.clientX + 'px');
+  document.documentElement.style.setProperty('--sy', e.clientY + 'px');
+});
+
+// Mode toggle
+const modeBtn = document.getElementById('modeBtn');
+modeBtn.addEventListener('click', () => {
+  document.documentElement.classList.toggle('light');
+});
+
+// Audio toggle
+const audio = document.getElementById('ambient');
+const audioBtn = document.getElementById('audioBtn');
+audioBtn.addEventListener('click', async () => {
+  if(audio.paused){ try{ await audio.play(); audioBtn.firstChild.textContent='Mute'; }catch(e){} }
+  else { audio.pause(); audioBtn.firstChild.textContent='Audio'; }
+});
+
+// Particle field reacting to cursor
+(function(){
+  const c = document.getElementById('particles'), ctx = c.getContext('2d');
+  let dpr = Math.max(1, window.devicePixelRatio||1), w=0, h=0, raf=0;
+  const parts = [];
+  function resize(){
+    w = c.clientWidth; h = c.clientHeight;
+    c.width = Math.floor(w*dpr); c.height = Math.floor(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    parts.length = 0;
+    const n = Math.floor((w*h)/16000);
+    for(let i=0;i<n;i++){
+      parts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.8,vy:(Math.random()-.5)*.8,r:1+Math.random()*2});
+    }
+  }
+  let mx=0,my=0; window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of parts){
+      const dx=mx-p.x, dy=my-p.y, dist=Math.hypot(dx,dy)+.001, pull=Math.min(1.5,80/(dist));
+      p.vx+=(dx/dist)*pull*.01; p.vy+=(dy/dist)*pull*.01;
+      p.x+=p.vx; p.y+=p.vy; p.vx*=.98; p.vy*=.98;
+      if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(95,225,255,.9)'; ctx.fill();
+    }
+    raf = requestAnimationFrame(step);
+  }
+  const ro = new ResizeObserver(()=>{ resize(); });
+  ro.observe(c); resize(); step();
+})();
+
+// 3D Tilt on mouse move + reveal on scroll
+const tilts = Array.from(document.querySelectorAll('.tilt'));
+tilts.forEach(card => {
+  let inner = card;
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect(), x = e.clientX - (r.left + r.width/2), y = e.clientY - (r.top + r.height/2);
+    inner.style.transform = `rotateX(${(-y/30)}deg) rotateY(${(x/30)}deg)`;
+  });
+  card.addEventListener('mouseleave', ()=> inner.style.transform = 'rotateX(0) rotateY(0)');
+});
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.animate([{transform:'translateY(20px)', opacity:0},{transform:'translateY(0)', opacity:1}], {duration:500, easing:'cubic-bezier(.2,.8,.2,1)', fill:'both'});
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+document.querySelectorAll('.card').forEach(el=>io.observe(el));
+
+// Sticky research timeline progress
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', ()=> {
+  const sec = document.getElementById('timeline');
+  const r = sec.getBoundingClientRect();
+  const total = Math.max(1, sec.offsetHeight - window.innerHeight);
+  const scrolled = Math.min(Math.max(-r.top, 0), total);
+  const pct = (scrolled/total)*100;
+  progress.style.height = pct + '%';
+});
+
+// Command palette (Cmd/Ctrl+K)
+const kbar = document.getElementById('kbar');
+const kbarBg = document.getElementById('kbarBg');
+const kbarInput = document.getElementById('kbarInput');
+const kbarList = document.getElementById('kbarList');
+const items = [
+  {label:'Resume', href:'#resume'},
+  {label:'Publications', href:'#publications'},
+  {label:'Contact', href:'#contact'},
+  {label:'Research', href:'#research'},
+];
+function openK(){ kbar.style.display='block'; kbarBg.style.display='block'; kbarInput.value=''; renderK(''); kbarInput.focus(); }
+function closeK(){ kbar.style.display='none'; kbarBg.style.display='none'; }
+function renderK(q){ kbarList.innerHTML = items.filter(i=>i.label.toLowerCase().includes(q.toLowerCase())).map(i=>`<li data-href="${i.href}">${i.label}</li>`).join(''); }
+window.addEventListener('keydown', e=>{
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openK(); }
+  if(e.key==='Escape'){ closeK(); }
+});
+kbarBg.addEventListener('click', closeK);
+kbarInput.addEventListener('input', e=> renderK(e.target.value));
+kbarList.addEventListener('click', e=>{
+  const li = e.target.closest('li'); if(!li) return;
+  document.querySelector(li.dataset.href)?.scrollIntoView({behavior:'smooth'});
+  closeK();
+});
+renderK('');
+
+// Citation cloud
+(function(){
+  const words = ["Negritude","Pan-Africanism","Afrotopia","postcolonial","diaspora","identity","power","resistance","Francophone","Africa","Sarr","Césaire","Senghor","Glissant","Yorùbá"];
+  const el = document.getElementById('cloud');
+  words.forEach(w=>{
+    const s = document.createElement('span'); s.textContent = w; el.appendChild(s);
+  });
+  function layout(){
+    const nodes = Array.from(el.querySelectorAll('span'));
+    const w = el.clientWidth, h = el.clientHeight, r = Math.min(w,h)/2 - 20;
+    nodes.forEach((n,i)=>{
+      const a = (i/nodes.length)*Math.PI*2;
+      const x = Math.cos(a)*r, y = Math.sin(a)*r*.6;
+      n.style.transform = `translate(${w/2 + x - 20}px, ${h/2 + y - 10}px)`;
+    });
+  }
+  new ResizeObserver(layout).observe(el); layout();
+})();
+
+// Typewriter with style cycling
+const phrases = [
+  "Research across Francophone worlds.",
+  "Academic inquiry. Cultural futures.",
+  "Literature, power, identity."
+];
+let pi = 0;
+function typeNext(){
+  const el = document.getElementById('typewriter');
+  const p = phrases[pi]; pi = (pi+1)%phrases.length;
+  let t = 0;
+  const iv = setInterval(()=>{
+    el.textContent = p.slice(0, t++);
+    if(t > p.length){ clearInterval(iv); setTimeout(typeNext, 1400); }
+  }, 25);
+}
+typeNext();
+
+// Magnetic buttons
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('mousemove', e=>{
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - (r.left + r.width/2);
+    const y = e.clientY - (r.top + r.height/2);
+    btn.style.transform = `translate(${x*0.06}px, ${y*0.08}px)`;
+  });
+  btn.addEventListener('mouseleave', ()=> btn.style.transform='');
+});
+
+// Contact form shake on empty
+document.getElementById('contactForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const f = e.currentTarget;
+  const name = f.name.value.trim();
+  const email = f.email.value.trim();
+  const msg = f.message.value.trim();
+  if(!name || !email || !msg){
+    f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); return;
+  }
+  alert("Thanks — demo only.");
+  f.reset();
+});
+
+// Photo tilt reacts stronger
+(function(){
+  const card = document.getElementById('photoCard');
+  card.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect(); const x = e.clientX - (r.left + r.width/2); const y = e.clientY - (r.top + r.height/2);
+    card.style.transform = `perspective(1000px) rotateX(${(-y/20)}deg) rotateY(${(x/20)}deg)`;
+  });
+  card.addEventListener('mouseleave', ()=> card.style.transform='perspective(1000px) rotateX(0) rotateY(0)');
+})();
+</script>
+</body>
+</html>
